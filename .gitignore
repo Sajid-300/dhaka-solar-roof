@@ -1,0 +1,38 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+.idea/
+
+# Large or re-downloadable data (get it with 01_download_data.py)
+data/*
+!data/dhaka_thanas.gpkg
+
+# Generated results (re-create with run_all.py)
+output/
+GHSL Data/
+Dhaka Solar Roof/
+*.pyHistory
+.ipynb_checkpoints/
+*.zip
+preview/
+
+# ArcGIS Pro local files (share the .mpkx package instead)
+*.aprx
+*.atbx
+*.gdb/
+ImportLog/
+Index/
+GpMessages/
+.backups/
+
+# Office / OS
+~$*
+Thumbs.db
+desktop.ini
+*.pdf
+!docs/*.pdf
+
+# Local notes
+STORYMAP.md
