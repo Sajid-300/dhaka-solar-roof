@@ -240,7 +240,7 @@ ax_ch.grid(color=C.GRID, lw=0.8)
 ax_ch.set_xlim(C.EPOCHS[0], C.EPOCHS[-1])
 ax_ch.set_ylim(0, GW_MAP.max() * 1.15)
 ax_ch.axvspan(C.LAST_OBSERVED, C.EPOCHS[-1], color="white", alpha=0.05, lw=0)
-ax_ch.text(C.LAST_OBSERVED + 0.6, GW_MAP.max() * 1.07, "Projection", fontsize=13,
+ax_ch.text(C.LAST_OBSERVED + 0.6, GW_MAP.max() * 1.07, "Model estimate", fontsize=13,
            color=C.MUTED, style="italic", va="center")
 ax_ch.plot(T, GW_MAP, color=C.AMBER, lw=1.5, alpha=0.18)
 ax_ch.plot(T, GW_CITY, color=C.CYAN, lw=1.5, alpha=0.18)
@@ -275,7 +275,7 @@ def render_map(t, phase):
     phase_txt.set_text({"observed": "Observed by satellite (GHSL epoch)" if on_epoch
                         else "Smoothed between 5-year satellite observations",
                         "hold": "2020: the latest observed year",
-                        "projected": "Projected by GHSL"}[phase])
+                        "projected": "GHSL model estimate (made in 2023)"}[phase])
     stat_vals[0].set_text(f"{area_all:,.0f}")
     stat_vals[1].set_text(f"{g_all:,.1f}")
     stat_vals[2].set_text(f"{twh(g_all):,.1f}")
@@ -319,13 +319,13 @@ def card(kind):
     else:
         r75, r20, r30 = ep.set_index("year").loc[[1975, C.LAST_OBSERVED, 2030], "roof_km2_map"]
         row20 = ep.set_index("year").loc[C.LAST_OBSERVED]
-        f.text(x, 0.84, "WHAT THE ROOFS COULD GIVE", fontsize=16, color=C.MUTED)
+        f.text(x, 0.84, "WHAT THE ROOFS OF GREATER DHAKA COULD GIVE", fontsize=16, color=C.MUTED)
         items = [
             (f"{r75:,.0f} → {r20:,.0f} km²",
-             f"Roof area in the map area, 1975 to {C.LAST_OBSERVED} ({r20 / r75:.1f} times larger)"),
+             f"Roof area in the mapped area (city and fringe), 1975 to {C.LAST_OBSERVED}, {r20 / r75:.1f} times larger"),
             (f"{row20.gw_map:,.1f} GW",
-             f"Solar capacity today's roofs could hold (range {row20.gw_map_low:,.1f} "
-             f"to {row20.gw_map_high:,.1f} GW)"),
+             f"Solar capacity those roofs could hold (range {row20.gw_map_low:,.1f} "
+             f"to {row20.gw_map_high:,.1f} GW); 41 city thanas alone: {row20.gw_city:,.1f} GW"),
             (f"{row20.twh_map:,.1f} TWh",
              "Clean electricity those panels could produce every year"),
         ]
@@ -413,7 +413,7 @@ for y in SWIPE_YEARS:
     im = draw_map(ax, stack[C.EPOCHS.index(y)])
     colorbar(f, im, [0.20, 0.075, 0.60, 0.016], size=11)
     f.text(0.04, 0.955, f"{y}", fontsize=40, weight="bold", color=C.AMBER, va="center")
-    f.text(0.20, 0.955, "Projected by GHSL" if y > C.LAST_OBSERVED else "Observed rooftop area (GHSL)",
+    f.text(0.20, 0.955, "GHSL model estimate (made in 2023)" if y > C.LAST_OBSERVED else "Observed rooftop area (GHSL)",
            fontsize=17, style="italic", color=C.MUTED, va="center")
     f.text(0.5, 0.012, C.credit(*CREDIT_KEYS), fontsize=9.5, color=C.MUTED, ha="center")
     f.savefig(OUTDIR / f"swipe_{y}.png", dpi=160)
